@@ -1,5 +1,4 @@
 name: Check issue title
-
 on:
   issues:
     types: [opened]
@@ -7,6 +6,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ISSUE_TITLE: ${{ github.event.issue.title }}
 
 jobs:
   check-issue-title:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check issue title
         run: |
-          title="${{ github.event.issue.title }}"
+          title="$ISSUE_TITLE"
           if [[ "$title" =~ ^octocat ]]; then
           echo "Issue title starts with 'octocat'"
           exit 0

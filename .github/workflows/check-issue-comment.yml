@@ -7,6 +7,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ISSUE_TITLE: ${{ github.event.issue.title }
 
 jobs:
   check-issue-comment:
@@ -17,7 +18,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const comment="${{ github.event.comment.body }}"
+            const comment=process.env.ISSUE_COMMENT
             if (comment.startsWith('octocat')) {
               console.log("Issue comment starts with 'octocat'")
             } else {
